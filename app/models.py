@@ -29,5 +29,20 @@ def __init__(self, first_name, last_name, email, password, confirmed, confirmed_
         self.confirmed = confirmed
         self.confirmed_on = confirmed_on
    
+def is_authenticated(self):
+        return True
+
+def is_active(self):
+        return True
+
+def is_anonymous(self):
+        return False
+
+def get_id(self):
+        return self.id
+
+def __repr__(self):
+        return f'User {self.first_name} {self.last_name}'
+   
 
    
