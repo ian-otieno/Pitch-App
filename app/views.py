@@ -70,4 +70,34 @@ def register():
         return redirect(url_for("email_verification_sent"))
 
     return render_template('register.html', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    user = current_user
+    user.authenticated = False
+    logout_user()
+    # redirecting to  the home page
+    return redirect(url_for('home'))
+
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    if User.confirmed==1:
+        flash('Account Already Confirmed! You Can Now Log In.', 'success')
+        return redirect(url_for('login'))
+
+    email = confirm_token(token)
+    user = User.query.filter_by(email=email).first_or_404()
+
+    if user.email == email:
+        user.confirmed = True
+        user.confirmed_on = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('You Have Successfully Confirmed Your Email Address. Proceed to Log In.', 'success')
+    else:
+        flash('The Confirmation Link Is Invalid Or Has Expired.', 'danger')
+
+    return redirect(url_for('login'))
+
         
