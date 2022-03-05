@@ -176,7 +176,22 @@ def pitches():
     return render_template('allpitches.html', pitches = pitches)
 
 @app.route('/pitches/creative', methods=['GET'])
-def creative():
+def creativity():
     pitches = Pitch.query.filter_by(category = "Creative Pitches")
     return render_template('creativity.html', pitches = pitches)
+
+@app.route('/pitches/interview', methods=['GET'])
+def interview():
+    pitches = Pitch.query.filter_by(category = "Interview Pitches")
+    return render_template('interview.html', pitches = pitches)
+
+@app.route('/pitches/sales', methods=['GET'])
+def sales():
+    pitches = Pitch.query.filter_by(category = "Sales Pitches")
+    return render_template('sales.html', pitches = pitches)
+
+@app.route('/pitches/product', methods=['GET'])
+def product():
+    pitches = Pitch.query.filter_by(category = "Product Pitches")
+    return render_template('product.html', pitches = pitches)
         
