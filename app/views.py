@@ -100,4 +100,36 @@ def confirm_email(token):
 
     return redirect(url_for('login'))
 
+@app.route('/sent')
+def email_verification_sent():
+    if User.confirmed==1:
+        flash('You Can Now Log In!', 'success')
+        return redirect(url_for('login'))
+    else:
+        flash('Registration Successful! A Confirmation Link Has Been Sent To Your Registered Email Address.', 'success')
+        return redirect(url_for('register'))
+
+@app.route('/pitches')
+@login_required
+def my_pitches():
+    form = PitchForm
+    pitches = Pitch.query.filter_by(user_id = current_user._get_current_object().id)
+    return render_template('pitches.html', pitches = pitches, form = form)
+
+@app.route('/add-comment/<pitch>', methods=['POST','GET'])
+@login_required
+def addComment(pitch):
+    form = CommentsForm()
+    pitch = Pitch.query.filter_by(id = pitch).first()
+    comments = Comments.query.filter_by(pitch_id = pitch.id)
+    comment = form.comment.data
+    user_id = current_user._get_current_object().id
+
+    if form.validate_on_submit():
+        comment=Comments(comment = comment, pitch = pitch, user_id = user_id)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('pitches'))
+
+    return render_template('comment.html', form = form, pitch = pitch, comments = comments)
         
