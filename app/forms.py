@@ -26,3 +26,6 @@ class PitchForm(FlaskForm):
     ], render_kw={"placeholder": "Choose Category"})
     submit = SubmitField('Submit')
     
+class CommentsForm(FlaskForm):
+    comment = TextAreaField(label = 'Comment',validators=[DataRequired(), Length(min=5, max=250,  message='Comment length must be between %(min)d and %(max)d characters!')], render_kw={"placeholder": "Your Comment", 'rows': 5})
+    submit= SubmitField('Submit')    
