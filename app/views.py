@@ -165,4 +165,18 @@ def profile():
     user = current_user._get_current_object()
     return render_template('profile.html', user = user)
 
+@app.route('/pitches/business', methods=['GET'])
+def business():
+    pitches = Pitch.query.filter_by(category = "Business Pitches")
+    return render_template('business.html', pitches = pitches)
+
+@app.route('/pitches/all', methods=['GET'])
+def pitches():
+    pitches = Pitch.query.all()
+    return render_template('allpitches.html', pitches = pitches)
+
+@app.route('/pitches/creative', methods=['GET'])
+def creative():
+    pitches = Pitch.query.filter_by(category = "Creative Pitches")
+    return render_template('creativity.html', pitches = pitches)
         
