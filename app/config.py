@@ -13,9 +13,9 @@ WTF_CSRF_ENABLED = True
 DEBUG_TB_ENABLED = False
 DEBUG_TB_INTERCEPT_REDIRECTS = False
 
-# Mail settings
+# Mail setting
 MAIL_SERVER = 'smtp.googlemail.com'
-MAIL_PORT = 465
+MAIL_PORT = 587
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
 
