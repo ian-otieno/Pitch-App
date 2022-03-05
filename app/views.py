@@ -132,4 +132,37 @@ def addComment(pitch):
         return redirect(url_for('pitches'))
 
     return render_template('comment.html', form = form, pitch = pitch, comments = comments)
+
+@app.route('/like/<id>',methods=['POST','GET'])
+@login_required
+def like(id):
+    if request.method=="POST":
+        get_likes = Pitch.query.filter_by(id = id).first_or_404()
+        votes = get_likes.likes + 1
+
+        newLikes = Pitch.query.filter_by(id = id).update({"likes": votes})
+        db.session.commit()
+        return redirect(url_for('home'))
+
+    return render_template('index.html')
+
+@app.route('/dislike/<id>',methods=['POST','GET'])
+@login_required
+def dislike(id):
+    if request.method=="POST":
+        get_likes = Pitch.query.filter_by(id = id).first_or_404()
+        votes = get_likes.dislikes + 1
+
+        newDislikes = Pitch.query.filter_by(id = id).update({"dislikes": votes})
+        db.session.commit()
+        return redirect(url_for('home'))
+
+    return render_template('index.html')
+
+@app.route('/profile',methods=['POST','GET'])
+@login_required
+def profile():
+    user = current_user._get_current_object()
+    return render_template('profile.html', user = user)
+
         
