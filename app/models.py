@@ -43,6 +43,32 @@ def get_id(self):
 
 def __repr__(self):
         return f'User {self.first_name} {self.last_name}'
+
+class Pitch(db.Model):
+    __tablename__ = 'pitches'
+
+    id = db.Column(db.Integer,primary_key=True)
+    pitch_body = db.Column(db.String(250))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    category = db.Column(db.String(55))
+    comment = db.relationship('Comments', backref='pitch', lazy='dynamic')
+    date_published = db.Column(db.DateTime, default = datetime.datetime.utcnow())
+    likes = db.Column(db.Integer, default=0)
+    dislikes = db.Column(db.Integer, default=0)
+
+    def __repr__(self):
+        return '<Pitch: {}>'.format(self.pitch_body)
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer,primary_key=True)
+    comment = db.Column(db.String(250))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+    date_published = db.Column(db.DateTime, default = datetime.datetime.utcnow)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    def __repr__(self):
+        return '<Comment: {}>'.format(self.comment)
    
 
    

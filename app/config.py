@@ -4,8 +4,6 @@ import os
 SECRET_KEY = os.environ.get('SECRET_KEY')
 SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
 SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") 
-if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
-    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
 SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
 DEBUG = False
 BCRYPT_LOG_ROUNDS = 12
@@ -15,7 +13,7 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 # Mail setting
 MAIL_SERVER = 'smtp.googlemail.com'
-MAIL_PORT = 587
+MAIL_PORT = 465
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
 

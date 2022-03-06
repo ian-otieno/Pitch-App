@@ -11,7 +11,6 @@ from flask_heroku import Heroku
 # Initializing application
 app = Flask(__name__)
 
-from app import views
 
 mail = Mail()
 login = LoginManager()
@@ -35,4 +34,5 @@ bcrypt = Bcrypt(app)
 def load_user(user_id):
     return User.query.get(user_id)
 
+from app import views
 
