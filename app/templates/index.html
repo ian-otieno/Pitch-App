@@ -79,4 +79,107 @@
 		</div>
 	</div>
 
-	
+	<div class="container-fluid">
+		<h1><b>All <span class="comment-title">Pitches</span></b></h1>
+		<hr><br>
+		<div class="row">
+			<div class="col-sm-4 pitch-card">
+				<div class="card shadow-sm h-100 text-center">
+					<div class="card-body">
+						<p class="card-text text-warning ct"> Interview Pitches </p>
+						<p class="card-title">" I am Collins Muga, a graduate from Jomo Kenyatatta University of Agriculture and Technology in BSc.Computer Technology. I have worked as an intern in various companies after my graduation where I served as an IT support team. I also focused  on UX/UI design to solve some challenges in technology. "</p>
+						<p class="card-text ct">Date Added: <span class="text-black">2022-02-01</span></p>
+						<p class="card-text ct">Added By: <span class="text-black">Collins Muga</span></p>
+						<div class="text-center">
+							<br>
+							<form method="POST">
+								<a href="#">
+									<button type="button" id="likes" class="btn btn-sm btn-blue" ><i class="far fa-thumbs-up"></i> ( 11) Likes</button>
+								</a>
+								<a href="#">
+									<button type="button" id="dislikes" class="btn btn-sm btn-blue" ><i class="far fa-thumbs-down"></i> ( 4 ) Dislikes</button>
+								</a>
+								<a href="#">
+									<button type="button" id="trash" class="btn btn-sm btn-blue"><i class="far fa-comment"></i> ( 16) Comments</button>
+								</a>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% for pitch in pitches %}
+			<div class="col-sm-4 pitch-card">
+				<div class="card shadow-sm h-100 text-center">
+					<div class="card-body">
+						<p class="card-text text-warning ct">{{ pitch.category }}</p>
+						<p class="card-title">" {{ pitch.pitch_body }} "</p>
+						<br>
+						<p class="card-text text-muted ct">Date Added: <span class="text-black">{{ pitch.date_published.strftime('%Y-%m-%d') }}</span></p>
+						<p class="card-text text-muted ct">Added By: <span class="text-black">{{ pitch.user.first_name }} {{ pitch.user.last_name }}</span></p>
+						<div class="text-center stats">
+							<br>
+							<form class="stats" action="/like/{{pitch.id}}" method="POST">
+								<button type="submit" id="likes" class="btn btn-sm btn-blue" ><i class="far fa-thumbs-up"></i> ( {{ pitch.likes }} ) Likes</button>
+							</form>
+							<form class="stats" action="/dislike/{{pitch.id}}" method="POST">
+								<button type="submit" id="dislikes" class="btn btn-sm btn-blue" ><i class="far fa-thumbs-down"></i> ( {{ pitch.dislikes }} ) Dislikes</button>
+							</form>
+							<a class="stats" href="/add-comment/{{pitch.id}}">
+								<button type="button" id="trash" class="btn btn-sm btn-blue"><i class="far fa-comment"></i> ( {{ pitch.comment.count() }} ) Comments</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Add A Pitch</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+					<form action="" method="POST">
+						{% for field, errors in form.errors.items() %}
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								{{ ', '.join(errors) }}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						{% endfor %}
+						{{ form.csrf_token }}
+						<div class="form-group">
+							{{ form.pitch_body(class="form-control", placeholder="Your Pitch") }}
+						</div>
+						<div class="form-group">
+							{{ form.category(class="form-control", placeholder="Choose Category") }}
+						</div>
+						<div class="form-group">
+							{{ form.submit(class="btn btn-blue btn-block")}}
+							<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Close</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+
+	{% block footer %}
+	<div class="container">
+		<div id="footer">
+			<p class="text-center">© By Ian Otieno</p>
+		</div>
+	</div>
+	{% endblock %}
+
+{% endblock content %}	
+
+		
