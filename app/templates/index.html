@@ -1,1 +1,24 @@
-<h1> This is pitch app </h1>
+{% extends "Base.html" %}
+
+<div class="container">
+	{% include 'Navbar.html' %}
+</div>
+
+{% block content %}
+
+	{% block main %}
+	<div class="text-center landing">
+		<h1><span class="logo-colour">First Impression</span> Matters!</h1>
+		<p>In life, you only have 60 seconds to make an Impression, this can empower you or break you. How do we ensure that you use your 1 minute to say something very Creative?  Present yourself in the most impressive way possible.</p>
+		{% if current_user.is_authenticated %}
+			<button class="btn btn-lg btn-blue ms-3" data-toggle="modal" data-target="#staticBackdrop"><i class="fal fa-plus-square"></i> Add A Pitch</button>
+		{% else %}
+			<a href="{{ url_for('login') }}">
+				<button class="btn btn-lg btn-blue ms-3"><i class="fal fa-pen"></i> Get Started</button>
+			</a>
+		{% endif %}
+	</div>
+
+	<br>
+
+	
